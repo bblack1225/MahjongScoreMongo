@@ -2,20 +2,20 @@ package com.example.demo.model;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Document(collection = "Teams")
 public class Team {
 	
-	@MongoId
-	private String id;
+	@Transient
+	public static final String SEQUENCE_NAME = "team_sequence";
 	
-	@Field("team_id")
-	private int teamId;
+	@Id
+	private long id;
 	
 	private String account;
 	
@@ -31,20 +31,12 @@ public class Team {
 		
 	}
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
-	}
-
-	public int getTeamId() {
-		return teamId;
-	}
-
-	public void setTeamId(int teamId) {
-		this.teamId = teamId;
 	}
 
 	public String getAccount() {

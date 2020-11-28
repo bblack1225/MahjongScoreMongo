@@ -19,29 +19,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Member;
 import com.example.demo.model.Records;
-import com.example.demo.repository.MemberRepository;
+import com.example.demo.repository.IMemberRepository;
+import com.example.demo.service.IMemberService;
 import com.example.demo.service.impl.SequenceGeneratorService;
 
 
 @RestController
 @RequestMapping("/api/member")
-public class CustomerController {
+public class MemberController {
 
 	@Autowired
-	private MemberRepository userRepository; 
+	private IMemberRepository userRepository; 
 	
 	@Autowired
 	MongoTemplate mongoTemplate;
 	
 	@Autowired
-	SequenceGeneratorService sequenceService;
+	IMemberService memberService;
 	
 	@PostMapping("/")
-	public ResponseEntity<Member> saveUser(@RequestBody Member user){
-		user.setCreatedDate(new Date());
-		user.setId(sequenceService.generateSequence(Member.SEQUENCE_NAME));
-		userRepository.save(user);
-		return ResponseEntity.ok(user);
+	public ResponseEntity<Member> saveUser(@RequestBody Member member){
+		Member newMember = memberService.saveMember(member);
+		return ResponseEntity.ok(newMember);
 	}
 	
 //	@GetMapping("/{name}")
