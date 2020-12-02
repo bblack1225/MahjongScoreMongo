@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.form.UpdateScoreForm;
+import com.example.demo.model.Member;
 import com.example.demo.model.Records;
 import com.example.demo.service.IRecordService;
 
@@ -22,6 +25,10 @@ public class RecordServiceImpl implements IRecordService{
 		
 		for(Records record:records) {
 			mongoTemplate.insert(record);
+			UpdateScoreForm form = new UpdateScoreForm();
+			form.setMemberId(record.getMemberId());
+			form.setScore(record.getScore());
+			this.updateScore(form);
 		}
 	}
 
@@ -31,6 +38,13 @@ public class RecordServiceImpl implements IRecordService{
 		query.addCriteria(Criteria.where("member_id").is(memberId));
 		List<Records> records = mongoTemplate.find(query, Records.class);
 		return records;
+	}
+	
+	public void updateScore(UpdateScoreForm form) {
+		Query query = new Query(Criteria.where("_id").is(form.getMemberId()));
+		Update update = new Update();
+		update.inc("score", form.getScore());
+		mongoTemplate.updateFirst(query, update, Member.class);
 	}
 
 }
