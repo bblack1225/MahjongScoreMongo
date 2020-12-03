@@ -9,4 +9,6 @@ public interface IRecordService {
 	void saveRecords(List<Records> records);
 	
 	List<Records> findRecordsById(long memberId);
+	
+	long findCountByTypeName(long memberId,String type);
 }

@@ -36,4 +36,10 @@ public class RecordController {
 		return ResponseEntity.status(HttpStatus.OK).body(records);
 	}
 	
+	@GetMapping("/typeCount/{memberId}/{type}")
+	public ResponseEntity<Long> findTypeCountByTypeName(@PathVariable("memberId") long memberId,@PathVariable("type") String type){
+		
+		return ResponseEntity.status(HttpStatus.OK).body(recordService.findCountByTypeName(memberId, type));
+	}
+	
 }

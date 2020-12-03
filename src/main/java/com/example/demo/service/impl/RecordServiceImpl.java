@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,12 @@ public class RecordServiceImpl implements IRecordService{
 		Update update = new Update();
 		update.inc("score", form.getScore());
 		mongoTemplate.updateFirst(query, update, Member.class);
+	}
+
+	@Override
+	public long findCountByTypeName(long memberId,String type) {
+	Query query = new Query(Criteria.where("type").is(type).and("member_id").is(memberId));
+	return mongoTemplate.count(query, Records.class);
 	}
 
 }
