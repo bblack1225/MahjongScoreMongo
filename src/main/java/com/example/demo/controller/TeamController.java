@@ -30,14 +30,14 @@ public class TeamController {
 		return ResponseEntity.status(HttpStatus.OK).body(newTeam);
 	}
 	
-	@PostMapping("/login")
-	public ResponseEntity<Object> login(@RequestBody LoginForm form){
-		Team team = teamService.login(form);
-		if(team == null) {		
-			System.out.println("not found");
-			return ResponseEntity.ok(null);
-		}else {
-			return ResponseEntity.ok(teamService.findMembersByTeamId(team.getId()));
-		}
-	}
+//	@PostMapping("/login")
+//	public ResponseEntity<Object> login(@RequestBody LoginForm form){
+//		Team team = teamService.login(form);
+//		if(team == null) {		
+//			System.out.println("not found");
+//			return ResponseEntity.ok(null);
+//		}else {
+//			return ResponseEntity.ok(teamService.findMembersByTeamId(team.getId()));
+//		}
+//	}
 }

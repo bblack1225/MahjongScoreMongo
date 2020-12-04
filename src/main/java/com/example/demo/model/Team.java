@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -17,9 +18,12 @@ public class Team {
 	@Id
 	private long id;
 	
-	private String account;
+	private String email;
 	
 	private String password;
+	
+	@Field("name")
+	private String teamName;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date createdTime;
@@ -39,12 +43,12 @@ public class Team {
 		this.id = id;
 	}
 
-	public String getAccount() {
-		return account;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setAccount(String account) {
-		this.account = account;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -69,6 +73,14 @@ public class Team {
 
 	public void setLastPlayed(Date lastPlayed) {
 		this.lastPlayed = lastPlayed;
+	}
+
+	public String getTeamName() {
+		return teamName;
+	}
+
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
 	
 }

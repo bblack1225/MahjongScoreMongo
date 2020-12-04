@@ -10,7 +10,9 @@ public interface ITeamService {
 
 	Team saveTeam(Team team);
 	
-	Team login(LoginForm form);
+//	Team login(LoginForm form);
 	
 	List<Member> findMembersByTeamId(long teamId);
+	
+	Team findByEmail(String email);
 }
