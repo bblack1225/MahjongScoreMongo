@@ -23,18 +23,19 @@ public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingF
 	public LoginAuthenticationFilter() {
 		super(new AntPathRequestMatcher("/login", "POST"));
 	}
+	
 	protected LoginAuthenticationFilter(RequestMatcher requiresAuthenticationRequestMatcher) {
 		super(requiresAuthenticationRequestMatcher);
-		// TODO Auto-generated constructor stub
 	}
 
-	private static String ACCOUNT_TYPE = "Member";
+	private static String ACCOUNT_TYPE = "Account-Type";
 	private final ObjectMapper objectMapper = new ObjectMapper();
 	
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
-		String accountType = response.getHeader(ACCOUNT_TYPE);
+		
+		String accountType = request.getHeader(ACCOUNT_TYPE);
 		
 		if(accountType == null || accountType.isEmpty()) {
 			throw new BadCredentialsException("accountType is null or empty");
@@ -43,9 +44,9 @@ public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingF
 		String requestBody;
 		requestBody = request.getReader().lines().collect(Collectors.joining());
 		LoginForm loginForm = objectMapper.readValue(requestBody, LoginForm.class);
-		System.out.println("loginForm" + loginForm.getEmail());
+		
 		Authentication token;
-		if(accountType.equals("Member")) {
+		if(accountType.equals("MEMBER")) {
 			token = new MemberAuthenticationToken(loginForm.getEmail(),loginForm.getPassword(), loginForm.getSessionId());
 		}else {
 			throw new BadCredentialsException("account type not found!");

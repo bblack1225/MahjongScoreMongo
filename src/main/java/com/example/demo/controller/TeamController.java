@@ -20,24 +20,11 @@ public class TeamController {
 	@Autowired
 	private ITeamService teamService;
 	
-	@Autowired
-	private MongoTemplate mongoTemplate;
-	
-	
 	@PostMapping("/")
 	public ResponseEntity<Team> saveTeam(@RequestBody Team team){
 		Team newTeam = teamService.saveTeam(team);
 		return ResponseEntity.status(HttpStatus.OK).body(newTeam);
 	}
 	
-//	@PostMapping("/login")
-//	public ResponseEntity<Object> login(@RequestBody LoginForm form){
-//		Team team = teamService.login(form);
-//		if(team == null) {		
-//			System.out.println("not found");
-//			return ResponseEntity.ok(null);
-//		}else {
-//			return ResponseEntity.ok(teamService.findMembersByTeamId(team.getId()));
-//		}
-//	}
+
 }

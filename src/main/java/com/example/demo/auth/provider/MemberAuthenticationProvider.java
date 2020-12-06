@@ -43,7 +43,7 @@ public class MemberAuthenticationProvider implements AuthenticationProvider {
 		Team team = teamService.findByEmail(email);
 		
 		if(team == null) {
-			throw new BadCredentialsException("email or password is invalid");
+			throw new BadCredentialsException("team not found");
 		}
 		
 		String rawPassword = token.getCredentials().toString();
@@ -66,7 +66,7 @@ public class MemberAuthenticationProvider implements AuthenticationProvider {
 		
 		List<GrantedAuthority> authorities = Arrays.stream("ROLE_MEMBER".split(",")).map(SimpleGrantedAuthority::new)
 				.collect(Collectors.toList());
-		return new MemberAuthenticationToken(token.getPrincipal(), token.getCredentials(), authorities, teamViewModel);
+		return new MemberAuthenticationToken(token.getPrincipal(), token.getCredentials(), authorities, account);
 	}
 
 

@@ -58,7 +58,7 @@ public class TeamServiceImpl implements ITeamService {
 
 	@Override
 	public Team findByEmail(String email) {
-		Query query = new Query(Criteria.where("account").is(email));
+		Query query = new Query(Criteria.where("email").is(email));
 		return mongoTemplate.findOne(query, Team.class);
 	}
 	
