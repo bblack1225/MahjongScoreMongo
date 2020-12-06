@@ -1,6 +1,7 @@
 package com.example.demo.auth.filter;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -35,11 +36,7 @@ public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingF
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
 		
-		String accountType = request.getHeader(ACCOUNT_TYPE);
-		
-		if(accountType == null || accountType.isEmpty()) {
-			throw new BadCredentialsException("accountType is null or empty");
-		}
+		String accountType = Optional.ofNullable(request.getHeader(ACCOUNT_TYPE)).orElseThrow(()->new BadCredentialsException("accountType is null or empty"));
 		
 		String requestBody;
 		requestBody = request.getReader().lines().collect(Collectors.joining());

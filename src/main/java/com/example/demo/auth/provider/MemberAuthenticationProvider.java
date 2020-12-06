@@ -2,6 +2,7 @@ package com.example.demo.auth.provider;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +41,7 @@ public class MemberAuthenticationProvider implements AuthenticationProvider {
 		MemberAuthenticationToken token = (MemberAuthenticationToken)authentication;
 		Account account = new Account();
 		String email = token.getPrincipal().toString();
-		Team team = teamService.findByEmail(email);
-		
-		if(team == null) {
-			throw new BadCredentialsException("team not found");
-		}
+		Team team = Optional.ofNullable(teamService.findByEmail(email)).orElseThrow(()-> new BadCredentialsException("Team email not found"));
 		
 		String rawPassword = token.getCredentials().toString();
 		
