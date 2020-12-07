@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Records;
+import com.example.demo.model.TypeDetail;
 import com.example.demo.service.IRecordService;
 
 @RestController
@@ -40,6 +41,12 @@ public class RecordController {
 	public ResponseEntity<Long> findTypeCountByTypeName(@PathVariable("memberId") long memberId,@PathVariable("type") String type){
 		
 		return ResponseEntity.status(HttpStatus.OK).body(recordService.findCountByTypeName(memberId, type));
+	}
+	
+	@GetMapping("/mainType/count/{memberId}")
+	public ResponseEntity<List<TypeDetail>> findCountOfMainType(@PathVariable("memberId") long memberId){
+		
+		return ResponseEntity.status(HttpStatus.OK).body(recordService.findCountOfMainType(memberId));
 	}
 	
 }
