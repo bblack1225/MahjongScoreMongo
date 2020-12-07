@@ -6,8 +6,6 @@ public class TypeDetail {
 	
 	private long occuredTimes;
 
-	
-
 	public String getTypeName() {
 		return typeName;
 	}

@@ -84,5 +84,13 @@ public class Member {
 	public void setLastModified(Date lastModified) {
 		this.lastModified = lastModified;
 	}
+
+	@Override
+	public String toString() {
+		return "Member [id=" + id + ", teamId=" + teamId + ", name=" + name + ", createdDate=" + createdDate
+				+ ", lastModified=" + lastModified + ", score=" + score + "]";
+	}
+	
+	
 	
 }

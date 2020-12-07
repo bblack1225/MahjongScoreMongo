@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.exception.MemberNotFoundException;
 import com.example.demo.model.Member;
 import com.example.demo.model.Records;
 import com.example.demo.repository.IMemberRepository;
@@ -64,7 +65,7 @@ public class MemberController {
 	
 	@GetMapping("/{memberId}")
 	public ResponseEntity<Member> findMemberById(@PathVariable("memberId")long memberId){
-		Member member = userRepository.findById(memberId).orElse(null);
+		Member member = userRepository.findById(memberId).orElseThrow(()->new MemberNotFoundException("member Not found!"));
 		return ResponseEntity.ok(member);
 	}
 	
