@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -32,6 +33,9 @@ public class Records {
 
 	@Field("affected_members_id")
 	private List<Long> affectedMembersId;
+	
+	@Field("created_time")
+	private Date createdTime;
 	
 	public Records() {
 
@@ -100,5 +104,14 @@ public class Records {
 	public void setAffectedMembersId(List<Long> affectedMembersId) {
 		this.affectedMembersId = affectedMembersId;
 	}
+
+	public Date getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
+	
 	
 }

@@ -1,16 +1,17 @@
 package com.example.demo.service.impl;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.form.UpdateScoreForm;
 import com.example.demo.model.Member;
@@ -19,6 +20,7 @@ import com.example.demo.model.TypeDetail;
 import com.example.demo.service.IRecordService;
 
 @Service
+@Transactional
 public class RecordServiceImpl implements IRecordService{
 
 	@Autowired
@@ -28,6 +30,7 @@ public class RecordServiceImpl implements IRecordService{
 	public void saveRecords(List<Records> records) {
 		
 		for(Records record:records) {
+			record.setCreatedTime(new Date());
 			mongoTemplate.insert(record);
 			UpdateScoreForm form = new UpdateScoreForm();
 			form.setMemberId(record.getMemberId());
@@ -71,6 +74,13 @@ public class RecordServiceImpl implements IRecordService{
 		detail.setTypeName(typeName);
 		detail.setOccuredTimes(mongoTemplate.count(query, Records.class));
 		return detail;
+	}
+
+	@Override
+	public List<Records> findCurrentMonthsOfRecords(long memberId) {
+		Date date = new Date();
+		Query query = new Query(Criteria.where("created_time").gt(date).and("membner_id").is(memberId));
+		return mongoTemplate.find(query, Records.class);
 	}
 
 }

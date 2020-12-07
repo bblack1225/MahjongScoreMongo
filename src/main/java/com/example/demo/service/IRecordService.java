@@ -14,4 +14,6 @@ public interface IRecordService {
 	long findCountByTypeName(long memberId,String type);
 	
 	List<TypeDetail> findCountOfMainType(long memberId);
+	
+	List<Records> findCurrentMonthsOfRecords(long memberId);
 }
