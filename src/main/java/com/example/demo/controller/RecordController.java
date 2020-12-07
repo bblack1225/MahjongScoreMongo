@@ -49,4 +49,10 @@ public class RecordController {
 		return ResponseEntity.status(HttpStatus.OK).body(recordService.findCountOfMainType(memberId));
 	}
 	
+	@GetMapping("/currentMonth/{memberId}")
+	public ResponseEntity<List<Records>> findCurrentMonthOfRecords(@PathVariable("memberId")long memberId){
+		
+		return null;
+	}
+	
 }

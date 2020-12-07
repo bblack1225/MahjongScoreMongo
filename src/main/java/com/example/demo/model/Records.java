@@ -37,6 +37,12 @@ public class Records {
 	@Field("created_time")
 	private Date createdTime;
 	
+	@Field("round_name")
+	private String roundName;
+	
+	@Field("round_sequence_number")
+	private long roundSequenceNumber;
+	
 	public Records() {
 
 	}
@@ -112,6 +118,21 @@ public class Records {
 	public void setCreatedTime(Date createdTime) {
 		this.createdTime = createdTime;
 	}
-	
+
+	public String getRoundName() {
+		return roundName;
+	}
+
+	public void setRoundName(String roundName) {
+		this.roundName = roundName;
+	}
+
+	public long getRoundSequenceNumber() {
+		return roundSequenceNumber;
+	}
+
+	public void setRoundSequenceNumber(long roundSequenceNumber) {
+		this.roundSequenceNumber = roundSequenceNumber;
+	}
 	
 }

@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -78,6 +79,7 @@ public class RecordServiceImpl implements IRecordService{
 
 	@Override
 	public List<Records> findCurrentMonthsOfRecords(long memberId) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
 		Query query = new Query(Criteria.where("created_time").gt(date).and("membner_id").is(memberId));
 		return mongoTemplate.find(query, Records.class);
