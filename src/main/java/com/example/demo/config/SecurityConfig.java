@@ -41,10 +41,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.addFilterAt(loginAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class).authorizeRequests()
-		.antMatchers("/api/records/*").hasRole("MEMBER")
-		.antMatchers("/api/member/*").hasRole("MEMBER")
-		.and().logout().logoutUrl("/api/auth/logout").invalidateHttpSession(true).deleteCookies("JSESSINOID")
-		.logoutSuccessHandler(logoutSuccessHandlerImpl()).and().csrf().disable();
+		.antMatchers("/api/records/*","/api/member/*")
+		.hasRole(ApplicationRoles.MEMBER.name())
+		.and()
+		.logout().logoutUrl("/api/auth/logout").invalidateHttpSession(true).deleteCookies("JSESSINOID")
+		.logoutSuccessHandler(logoutSuccessHandlerImpl())
+		.and()
+		.csrf().disable();
 	}
 	
 	@Bean

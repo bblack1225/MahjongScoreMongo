@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.auth.token.MemberAuthenticationToken;
+import com.example.demo.config.ApplicationRoles;
 import com.example.demo.model.Account;
 import com.example.demo.model.Member;
 import com.example.demo.model.Team;
@@ -41,7 +42,8 @@ public class MemberAuthenticationProvider implements AuthenticationProvider {
 		MemberAuthenticationToken token = (MemberAuthenticationToken)authentication;
 		Account account = new Account();
 		String email = token.getPrincipal().toString();
-		Team team = Optional.ofNullable(teamService.findByEmail(email)).orElseThrow(()-> new BadCredentialsException("Team email not found"));
+		Team team = Optional.ofNullable(teamService.findByEmail(email))
+							.orElseThrow(()-> new BadCredentialsException("Team email not found"));
 		
 		String rawPassword = token.getCredentials().toString();
 		
@@ -57,12 +59,14 @@ public class MemberAuthenticationProvider implements AuthenticationProvider {
 		teamViewModel.setMembersOfTeam(players);
 		
 		account.setId(team.getId());
-		account.setAccountType("MEMBER");
+		account.setAccountType(ApplicationRoles.MEMBER.name());
 		account.setAccountDetails(teamViewModel);
 		
 		
-		List<GrantedAuthority> authorities = Arrays.stream("ROLE_MEMBER".split(",")).map(SimpleGrantedAuthority::new)
-				.collect(Collectors.toList());
+		List<GrantedAuthority> authorities = Arrays
+												.stream("ROLE_MEMBER".split(","))
+												.map(SimpleGrantedAuthority::new)
+												.collect(Collectors.toList());
 		return new MemberAuthenticationToken(token.getPrincipal(), token.getCredentials(), authorities, account);
 	}
 

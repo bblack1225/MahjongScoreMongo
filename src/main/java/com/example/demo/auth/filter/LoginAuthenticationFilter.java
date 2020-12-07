@@ -16,6 +16,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.example.demo.auth.token.MemberAuthenticationToken;
+import com.example.demo.config.ApplicationRoles;
 import com.example.demo.form.LoginForm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -43,7 +44,7 @@ public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingF
 		LoginForm loginForm = objectMapper.readValue(requestBody, LoginForm.class);
 		
 		Authentication token;
-		if(accountType.equals("MEMBER")) {
+		if(ApplicationRoles.MEMBER.name().equals(accountType)) {
 			token = new MemberAuthenticationToken(loginForm.getEmail(),loginForm.getPassword(), loginForm.getSessionId());
 		}else {
 			throw new BadCredentialsException("account type not found!");
