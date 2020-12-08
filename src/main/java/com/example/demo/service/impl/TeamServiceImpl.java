@@ -1,5 +1,7 @@
 package com.example.demo.service.impl;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.converter.ZonedDateTimeReadConverter;
+import com.example.demo.converter.ZonedDateTimeWriteConverter;
 import com.example.demo.form.LoginForm;
 import com.example.demo.model.Member;
 import com.example.demo.model.Team;
@@ -34,9 +38,16 @@ public class TeamServiceImpl implements ITeamService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	ZonedDateTimeWriteConverter dateWriteConverter;
+	
+	@Autowired
+	ZonedDateTimeReadConverter dateReadConverter; 
+	
 	@Override
 	public Team saveTeam(Team team) {
-		team.setCreatedTime(new Date());
+		ZonedDateTime now = ZonedDateTime.now();
+		team.setCreatedTime(dateWriteConverter.convert(now));
 		team.setId(sequenceService.generateSequence(Team.SEQUENCE_NAME));
 		team.setPassword(passwordEncoder.encode(team.getPassword()));
 		teamRepository.save(team);
@@ -59,7 +70,9 @@ public class TeamServiceImpl implements ITeamService {
 	@Override
 	public Team findByEmail(String email) {
 		Query query = new Query(Criteria.where("email").is(email));
-		return mongoTemplate.findOne(query, Team.class);
+		Team team = mongoTemplate.findOne(query, Team.class);
+		ZonedDateTime time = dateReadConverter.convert(team.getCreatedTime());
+		return team;
 	}
 	
 	

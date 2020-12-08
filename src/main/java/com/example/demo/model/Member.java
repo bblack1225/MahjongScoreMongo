@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -25,11 +26,15 @@ public class Member {
 	
 	private String name;
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date createdDate;
+//	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//	private Date createdDate;
+//	
+//	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//	private Date lastModified;
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date lastModified;
+	private ZonedDateTime createdDate;
+	
+	private ZonedDateTime lastModified;
 	
 	private int score;
 
@@ -50,13 +55,13 @@ public class Member {
 	}
 	
 
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+//	public Date getCreatedDate() {
+//		return createdDate;
+//	}
+//
+//	public void setCreatedDate(Date createdDate) {
+//		this.createdDate = createdDate;
+//	}
 
 	public Member() {
 	}
@@ -77,18 +82,36 @@ public class Member {
 		this.teamId = teamId;
 	}
 
-	public Date getLastModified() {
-		return lastModified;
-	}
-
-	public void setLastModified(Date lastModified) {
-		this.lastModified = lastModified;
-	}
+//	public Date getLastModified() {
+//		return lastModified;
+//	}
+//
+//	public void setLastModified(Date lastModified) {
+//		this.lastModified = lastModified;
+//	}
+	
+	
 
 	@Override
 	public String toString() {
 		return "Member [id=" + id + ", teamId=" + teamId + ", name=" + name + ", createdDate=" + createdDate
 				+ ", lastModified=" + lastModified + ", score=" + score + "]";
+	}
+
+	public ZonedDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(ZonedDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public ZonedDateTime getLastModified() {
+		return lastModified;
+	}
+
+	public void setLastModified(ZonedDateTime lastModified) {
+		this.lastModified = lastModified;
 	}
 	
 	

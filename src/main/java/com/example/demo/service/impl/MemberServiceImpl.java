@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,8 @@ public class MemberServiceImpl implements IMemberService{
 	
 	@Override
 	public Member saveMember(Member member) {
-		member.setCreatedDate(new Date());
+		ZonedDateTime now = ZonedDateTime.now();
+		member.setCreatedDate(now);
 		member.setId(sequenceService.generateSequence(Member.SEQUENCE_NAME));
 		memberRepository.save(member);
 		Query query = new Query();
